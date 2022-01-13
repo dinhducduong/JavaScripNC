@@ -33,7 +33,7 @@ router.on({
     "/tuyendung": () => {
         print("Tuyển dụng");
     },
-    "/news/:id": ({ data }) => {
+    "/detail/:id": ({ data }) => {
         const { id } = data;
         print(DetailPage.render(id));
     },

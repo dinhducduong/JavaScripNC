@@ -13,7 +13,7 @@ const Home = {
           <article class="item border text-center">
           <img src="${post.img}" class="px-12 py-4"> 
           <div class="text-left px-12">
-            <a class="font-bold hover:text-rose-700" href="/news/${post.id}">${post.title}</a>
+            <a class="font-bold hover:text-rose-700" href="/detail/${post.id}">${post.title}</a>
           <p>${post.desc}</p>
           </div>
         </article>
@@ -33,7 +33,7 @@ const Home = {
         <article class="item border text-center">
           <img src="${post.img}" class="px-12 py-4"> 
           <div class="text-left px-12">
-            <a class="font-bold hover:text-rose-700" href="/news/${post.id}">${post.title}</a>
+            <a class="font-bold hover:text-rose-700" href="/detail/${post.id}">${post.title}</a>
           <p>${post.desc}</p>
           </div>
         </article>
