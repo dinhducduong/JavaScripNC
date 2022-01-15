@@ -20,6 +20,7 @@ const HomePage = {
             <a href=""><img src="./images/lg.jpg"></a>
           </div>
           <div class="auth p-3 text-2xl justify-self-end text-zinc-900">
+            <a href="/admin/dashboard">Dashboard</a>
             <a href="/sign-up" class="hover:text-red-400"><i class="far fa-user-circle "></i></a>
             <a href="" class="hover:text-red-400"><i class="fas fa-cart-plus "></i></a>
           </div>
