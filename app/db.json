@@ -1,0 +1,72 @@
+{
+  "news": [
+    {
+      "title": "Son môi",
+      "img": "http://res.cloudinary.com/duongquanhoa/image/upload/v1645155470/k1hdp6jbyalz5ejieif6.jpg",
+      "desc": "Son môi là mỹ phẩm có chứa sắc tố, dầu, sáp, chất làm mềm da; có tác dụng tô thoa tạo màu sắc, tạo bề mặt và bảo vệ đôi môi.\n\nNhiều màu sắc và kiểu loại son môi tồn tại. Như với hầu hết nhiều loại mỹ phẩm, son môi khá phổ biến, nhưng không phải độc quyền dành cho phái nữ. Sử dụng son môi đã tồn tại từ thời Trung Cổ. Một số son môi cũng là chất dưỡng môi, để gia tăng màu sắc và độ ẩm.",
+      "id": 2
+    }
+  ],
+  "products": [
+    {
+      "title": "11",
+      "img": "http://res.cloudinary.com/duongquanhoa/image/upload/v1645003361/ncxldg6iiexysgzqarsv.jpg",
+      "desc": "ưeweedwewefwef",
+      "price": "179078",
+      "category": "1",
+      "id": 1
+    },
+    {
+      "title": "22",
+      "img": "http://res.cloudinary.com/duongquanhoa/image/upload/v1645003361/ncxldg6iiexysgzqarsv.jpg",
+      "desc": "ưeweedwewefwef",
+      "price": "123343",
+      "category": "1",
+      "id": 2
+    },
+    {
+      "title": "33",
+      "img": "http://res.cloudinary.com/duongquanhoa/image/upload/v1645003361/ncxldg6iiexysgzqarsv.jpg",
+      "desc": "ưeweedwewefwef",
+      "price": "1667671",
+      "category": "1",
+      "id": 3
+    },
+    {
+      "title": "44",
+      "img": "http://res.cloudinary.com/duongquanhoa/image/upload/v1645003361/ncxldg6iiexysgzqarsv.jpg",
+      "desc": "ưeweedwewefwef",
+      "price": "13452",
+      "category": "1",
+      "id": 4
+    },
+    {
+      "title": "55",
+      "img": "http://res.cloudinary.com/duongquanhoa/image/upload/v1645003386/yq3udpo6bjscuzq178f0.jpg",
+      "desc": "1",
+      "price": "345345",
+      "category": "2",
+      "id": 5
+    }
+  ],
+  "users": [
+    {
+      "email": "admin123@gmail.com",
+      "password": "$2a$10$iSLBLMcoGdYMJUvqebz3k.uC/Kj25Ybj87KdPT5C.GMvLAdLmcZSm",
+      "username": "admin",
+      "role": 1,
+      "id": 1
+    }
+  ],
+  "category": [
+    {
+      "title": "ẻthyjgdrggf",
+      "id": 1
+    },
+    {
+      "title": "zđcscsấccsd",
+      "id": 2
+    }
+  ],
+  "orders": []
+}

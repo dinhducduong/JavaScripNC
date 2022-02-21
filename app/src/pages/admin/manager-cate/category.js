@@ -1,8 +1,8 @@
 import Header from "../components/header"
-import { getAll } from "../../../api/news";
-import { remove } from "../../../api/news";
+import { getAll } from "../../../api/category";
+import { remove } from "../../../api/category";
 
-const News = {
+const CategoryList = {
     async render() {
         const { data } = await getAll();
         return /*html*/ `
@@ -10,7 +10,7 @@ const News = {
         <div class="flex flex-col" >
         <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
             <main id="app_admin">
-        <a href="/admin/dashboard/news/add" class="w-20 hidden sm:inline-flex ml-5 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+        <a href="/admin/dashboard/category/add" class="w-20 hidden sm:inline-flex ml-5 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
             
             Add
         </a>
@@ -26,12 +26,7 @@ const News = {
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Title
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Desc
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Role
-                                    </th>
+                                    
                                     <th scope="col" class="relative px-6 py-3">
                                         <span class="sr-only">Edit</span>
                                     </th>
@@ -58,16 +53,9 @@ const News = {
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900">${post.title}</div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ">
-                                        ${post.desc}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    <img src="${post.img}" width="50">
-                                </td>
+                                
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="/admin/dashboard/news/edit/${post.id}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                    <a href="/admin/dashboard/category/edit/${post.id}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                     <button data-id="${post.id}" class="text-indigo-600 hover:text-indigo-900 btn">Xóa</button>
                                 </td>
                                
@@ -114,12 +102,12 @@ const News = {
                 if (confirm) {
                     // gọi hàm delete trong folder API và bắn id vào hàm
                     remove(id).then(() => {
-                        document.location.href = "http://localhost:3000/admin/dashboard/news"
+                        document.location.href = "http://localhost:3000/admin/dashboard/category"
                     })
                 }
             })
         });
     }
 }
-export default News
+export default CategoryList
 

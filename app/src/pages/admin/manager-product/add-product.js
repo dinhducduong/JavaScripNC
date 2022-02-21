@@ -1,12 +1,10 @@
 import Header from "../components/header"
-import { get } from "../../../api/news";
-import { put } from "../../../api/news";
+import { add } from "../../../api/products";
+import { getAll } from "../../../api/category";
 import axios from "axios";
-import toastr from "toastr";
-import "toastr/build/toastr.min.css";
-const Edit_news = {
-  async render(id) {
-    const { data } = await get(id);
+const Add_product = {
+  async render() {
+    const { data } = await getAll();
     return /*html*/`
 ${Header.render()}
     <div class="flex flex-col" >
@@ -24,18 +22,38 @@ ${Header.render()}
                         Tiêu đề
                       </label>
                       <div class="mt-1 flex rounded-md shadow-sm">
-                        
-                        <input value="${data.title}" type="text" id="title" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="">
+                        <input required type="text" id="title" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="">
                       </div>
                     </div>
                   </div>
+                  <div class="grid grid-cols-3 gap-6">
+                    <div class="col-span-3 sm:col-span-2">
+                      <label for="company-website" class="block text-sm font-medium text-gray-700">
+                        Giá
+                      </label>
+                      <div class="mt-1 flex rounded-md shadow-sm">
+                        <input required type="text" id="price" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                  <label for="country" class="block text-sm font-medium text-gray-700">Danh mục</label>
+                  <select id="category" autocomplete="country-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  ${data.map((post) =>
+      `
+                       <option value="${post.id}">${post.title}</option>
+                    
+                    `
+    )}  
                   
+                  </select>
+                </div>
                   <div>
                     <label for="about" class="block text-sm font-medium text-gray-700">
                       Mô tả
                     </label>
                     <div class="mt-1">
-                      <textarea id="desc"rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" placeholder="">${data.desc}</textarea>
+                      <textarea required id="desc"rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" placeholder=""></textarea>
                     </div>
                     
                   </div>
@@ -60,17 +78,15 @@ ${Header.render()}
                     <label class="block text-sm font-medium text-gray-700">
                       Chọn ảnh
                     </label>
-                    
                     <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                       <div class="space-y-1 text-center">
-                      <img src="${data.img}" id="img" width="100">
                         <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                           <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                         <div class="flex text-sm text-gray-600">
                           <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                             <span>Upload a file</span>
-                            <input value="${data.img}" id="img-post" type="file" class="">
+                            <input id="img-post" type="file" class="">
                           </label>
                           <p class="pl-1">or drag and drop</p>
                         </div>
@@ -82,7 +98,7 @@ ${Header.render()}
                   </div>
                 </div>
                 <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                  <button data-id="${data.id}" class="btn inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <button class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Save
                   </button>
                 </div>
@@ -112,42 +128,33 @@ ${Header.render()}
     const formAdd = document.querySelector("#form-add-post");
     const imgPreview = document.querySelector("#img");
     const imgPost = document.querySelector("#img-post");
-    const btn = document.querySelector(".btn");
-    const { id } = btn.dataset;
     const CLOUDINARY_API_URL = "https://api.cloudinary.com/v1_1/duongquanhoa/upload";
     const CLOUDINARY_PRESET = "qdqbxnnx";
-    let imgLink = "";
 
-    imgPost.addEventListener('change', function (e) {
-      imgPreview.src = URL.createObjectURL(e.target.files[0]);
-    });
     formAdd.addEventListener("submit", async function (e) {
       e.preventDefault();
       const file = imgPost.files[0];
 
-      if (file) {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("upload_preset", CLOUDINARY_PRESET);
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", CLOUDINARY_PRESET);
 
-        // call api cloudinary
-        const { data } = await axios.post(CLOUDINARY_API_URL, formData, {
-          headers: {
-            "Content-Type": "application/form-data"
-          }
-        })
-        imgLink = data.url
-      }
+      // call api cloudinary
+      const { data } = await axios.post(CLOUDINARY_API_URL, formData, {
+        headers: {
+          "Content-Type": "application/form-data"
+        }
+      })
       // call api thêm bài viết
-      put(id, {
+      add({
         title: document.querySelector("#title").value,
-        img: imgLink ? imgLink : imgPreview.src,
+        img: data.url,
         desc: document.querySelector("#desc").value,
+        price: document.querySelector("#price").value,
+        category: document.querySelector("#category").value,
 
       }).then(() => {
-        toastr.success("Cập nhật thành công");
-
-        document.location.href = "http://localhost:3000/admin/dashboard/news"
+        document.location.href = "http://localhost:3000/admin/dashboard/product"
 
       });
 
@@ -155,4 +162,4 @@ ${Header.render()}
   },
 }
 
-export default Edit_news;
+export default Add_product;

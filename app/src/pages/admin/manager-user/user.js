@@ -1,19 +1,18 @@
 import Header from "../components/header"
-import { getAll } from "../../../api/news";
-import { remove } from "../../../api/news";
+import { getAll } from "../../../api/user";
+import { get } from "../../../api/user";
+import { put } from "../../../api/user";
 
-const News = {
+const User = {
     async render() {
         const { data } = await getAll();
+        console.log(data)
         return /*html*/ `
         ${Header.render()}
         <div class="flex flex-col" >
         <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
             <main id="app_admin">
-        <a href="/admin/dashboard/news/add" class="w-20 hidden sm:inline-flex ml-5 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
-            
-            Add
-        </a>
+       
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -24,17 +23,15 @@ const News = {
                                         id
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Title
+                                        Username
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Desc
+                                        Email
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Role
+                                        Loại tài khoản
                                     </th>
-                                    <th scope="col" class="relative px-6 py-3">
-                                        <span class="sr-only">Edit</span>
-                                    </th>
+                                   
                                 </tr>
                             </thead>
                            
@@ -56,21 +53,22 @@ const News = {
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">${post.title}</div>
+                                    <div class="text-sm text-gray-900">${post.username}</div>
                                 </td>
+                                
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ">
-                                        ${post.desc}
-                                    </span>
+                                    <div class="text-sm text-gray-900">${post.email}</div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    <img src="${post.img}" width="50">
+                                
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">
+                                    
+                                    ${post.role == 1 ? "Thành viên" : "Admin"}
+                                    <button class="btnAdmin border bg-cyan-700 rounded text-white h-10 w-30 hover:bg-red-300" data-id="${post.id}">Tài khoản admin </button>
+                                    <button class="btnTv border bg-cyan-700 rounded text-white h-10 w-30 hover:bg-red-300" data-id="${post.id}">Tài khoản thành viên </button>
+                                    
+                                    </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="/admin/dashboard/news/edit/${post.id}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    <button data-id="${post.id}" class="text-indigo-600 hover:text-indigo-900 btn">Xóa</button>
-                                </td>
-                               
                             </tr>
 
                             <!-- More people... -->
@@ -103,23 +101,48 @@ const News = {
     },
     afterRender() {
         // lấy danh sách button sau khi render
-        const buttons = document.querySelectorAll('.btn');
+        const buttonsA = document.querySelectorAll('.btnAdmin');
+        const buttonsT = document.querySelectorAll('.btnTv');
         // tạo vòng lặp cho nodelist button
-        buttons.forEach(btn => {
+        buttonsA.forEach(btnAdmin => {
             // lấy ID từ thuộc tính data-id của button
-            const id = btn.dataset.id;
-            console.log(id)
-            btn.addEventListener('click', () => {
-                const confirm = window.confirm("Ban co muon xoa bai viet nay khong?");
-                if (confirm) {
-                    // gọi hàm delete trong folder API và bắn id vào hàm
-                    remove(id).then(() => {
-                        document.location.href = "http://localhost:3000/admin/dashboard/news"
-                    })
-                }
+            const id = btnAdmin.dataset.id;
+            btnAdmin.addEventListener('click', async () => {
+
+                const { data } = await get(id);
+                console.log(data);
+                put(1, {
+                    email: data.email,
+                    password: data.password,
+                    username: data.username,
+                    role: 0,
+
+                }).then(() => {
+                    document.location.href = "http://localhost:3000/admin/dashboard/user"
+
+                });
+            })
+        });
+        buttonsT.forEach(buttonsT => {
+            // lấy ID từ thuộc tính data-id của button
+            const id = buttonsT.dataset.id;
+            buttonsT.addEventListener('click', async () => {
+
+                const { data } = await get(id);
+                console.log(data);
+                put(1, {
+                    email: data.email,
+                    password: data.password,
+                    username: data.username,
+                    role: 1,
+
+                }).then(() => {
+                    document.location.href = "http://localhost:3000/admin/dashboard/user"
+
+                });
             })
         });
     }
 }
-export default News
+export default User
 

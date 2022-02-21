@@ -1,7 +1,7 @@
-
-const Dashboard = {
+const Header = {
     render() {
-        return /*html*/`
+
+        return /*html*/ `
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center justify-start">
@@ -50,8 +50,7 @@ const Dashboard = {
                 </div>
             </div>
         </div>
-   </nav >
-    <div class="flex overflow-hidden bg-white pt-16">
+        <div class="flex overflow-hidden bg-white pt-16">
         <aside id="sidebar" class="fixed hidden z-20 h-full top-0 left-0 pt-16 lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75" aria-label="Sidebar">
             <div class="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white pt-0">
                 <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
@@ -104,7 +103,7 @@ const Dashboard = {
                                     <span class="ml-3 flex-1 whitespace-nowrap">News</span>
                                 </a>
                             </li>
-                            <li>
+                           <li>
                                 <a href="/admin/dashboard/category" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                                 <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
@@ -112,8 +111,6 @@ const Dashboard = {
                                     <span class="ml-3 flex-1 whitespace-nowrap">Danh mục</span>
                                 </a>
                             </li>
-                            
-                           
                             
                         </ul>
                         <div class="space-y-2 pt-2">
@@ -135,11 +132,12 @@ const Dashboard = {
                 </div>
             </div>
         </aside>
+        </div>
         <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
         
-    </div>
         `
+
     }
 }
 
-export default Dashboard;
+export default Header;
