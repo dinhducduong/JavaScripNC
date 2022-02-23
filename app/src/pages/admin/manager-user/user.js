@@ -110,8 +110,8 @@ const User = {
             btnAdmin.addEventListener('click', async () => {
 
                 const { data } = await get(id);
-                console.log(data);
-                put(1, {
+                console.log(id);
+                put(id, {
                     email: data.email,
                     password: data.password,
                     username: data.username,
@@ -130,7 +130,7 @@ const User = {
 
                 const { data } = await get(id);
                 console.log(data);
-                put(1, {
+                put(id, {
                     email: data.email,
                     password: data.password,
                     username: data.username,

@@ -2,6 +2,8 @@ import Header from "../components/header"
 import { add } from "../../../api/products";
 import { getAll } from "../../../api/category";
 import axios from "axios";
+import $ from 'jquery';
+import validate from 'jquery-validation';
 const Add_product = {
   async render() {
     const { data } = await getAll();
@@ -22,7 +24,7 @@ ${Header.render()}
                         Tiêu đề
                       </label>
                       <div class="mt-1 flex rounded-md shadow-sm">
-                        <input required type="text" id="title" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="">
+                        <input name="title" type="text" id="title" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="">
                       </div>
                     </div>
                   </div>
@@ -32,7 +34,7 @@ ${Header.render()}
                         Giá
                       </label>
                       <div class="mt-1 flex rounded-md shadow-sm">
-                        <input required type="text" id="price" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="">
+                        <input name="price" type="text" id="price" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="">
                       </div>
                     </div>
                   </div>
@@ -53,7 +55,7 @@ ${Header.render()}
                       Mô tả
                     </label>
                     <div class="mt-1">
-                      <textarea required id="desc"rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" placeholder=""></textarea>
+                      <textarea name="desc" id="desc"rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" placeholder=""></textarea>
                     </div>
                     
                   </div>
@@ -131,33 +133,62 @@ ${Header.render()}
     const CLOUDINARY_API_URL = "https://api.cloudinary.com/v1_1/duongquanhoa/upload";
     const CLOUDINARY_PRESET = "qdqbxnnx";
 
-    formAdd.addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const file = imgPost.files[0];
+    $("#form-add-post").validate({
+      rules: {
+        "title": {
+          required: true,
+        },
+        "desc": {
+          required: true,
+        },
+        "price": {
+          required: true,
+        },
+      },
+      messages: {
+        "title": {
+          required: "Không được để trống trường này!",
+        },
+        "desc": {
+          required: "Không được để trống trường này!",
+        },
+        "price": {
+          required: "Không được để trống trường này!",
+        },
+      },
+      submitHandler: function () {
+        async function addProduct() {
+          const file = imgPost.files[0];
+          if (file) {
+            const file = imgPost.files[0];
 
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", CLOUDINARY_PRESET);
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", CLOUDINARY_PRESET);
 
-      // call api cloudinary
-      const { data } = await axios.post(CLOUDINARY_API_URL, formData, {
-        headers: {
-          "Content-Type": "application/form-data"
+            // call api cloudinary
+            const { data } = await axios.post(CLOUDINARY_API_URL, formData, {
+              headers: {
+                "Content-Type": "application/form-data"
+              }
+            })
+            // call api thêm bài viết
+            add({
+              title: document.querySelector("#title").value,
+              img: data.url,
+              desc: document.querySelector("#desc").value,
+              price: document.querySelector("#price").value,
+              category: document.querySelector("#category").value,
+
+            }).then(() => {
+              document.location.href = "http://localhost:3000/admin/dashboard/product"
+
+            });
+          }
+
         }
-      })
-      // call api thêm bài viết
-      add({
-        title: document.querySelector("#title").value,
-        img: data.url,
-        desc: document.querySelector("#desc").value,
-        price: document.querySelector("#price").value,
-        category: document.querySelector("#category").value,
-
-      }).then(() => {
-        document.location.href = "http://localhost:3000/admin/dashboard/product"
-
-      });
-
+        addProduct();
+      }
     });
   },
 }

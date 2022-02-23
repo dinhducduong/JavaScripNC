@@ -1,7 +1,8 @@
 import Footer from "../components/footer";
 import Header from "../components/header";
 import { signin } from "../api/user";
-
+import $ from 'jquery';
+import validate from 'jquery-validation';
 const Login = {
   render() {
     return /*html*/`
@@ -26,11 +27,11 @@ const Login = {
             <div class="rounded-md shadow-sm -space-y-px">
               <div>
                 <label for="email-address" class="sr-only">Email address</label>
-                <input required id="email" type="email" autocomplete="email" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
+                <input name="email" id="email" type="email" autocomplete="email" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
               </div>
               <div>
                 <label for="password" class="sr-only">Password</label>
-                <input required id="password" type="password" autocomplete="current-password" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
+                <input id="password" type="password" autocomplete="current-password" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
               </div>
             </div>
       
@@ -69,20 +70,38 @@ const Login = {
       `;
   },
   afterRender() {
-    const formSignin = document.querySelector('#formSignin');
-    formSignin.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const response = await signin({
-        email: document.querySelector('#email').value,
-        password: document.querySelector('#password').value
-      })
-      // lưu thông tin user vào localStorage
-      localStorage.setItem("user", JSON.stringify(response.data))
-      if (response.data.user) {
-        // nếu là admin thì chuyển trang
-        document.location.href = "/"
+
+    $("#formSignin").validate({
+      rules: {
+        "email": {
+          required: true,
+        }
+
+      },
+      messages: {
+
+        "email": {
+          required: "Không được để trống trường này!",
+        }
+      },
+      submitHandler: function () {
+        async function signins() {
+          const response = await signin({
+            email: document.querySelector('#email').value,
+            password: document.querySelector('#password').value
+          })
+          // lưu thông tin user vào localStorage
+          localStorage.setItem("user", JSON.stringify(response.data))
+          if (response.data.user) {
+            // nếu là admin thì chuyển trang
+            document.location.href = "/"
+          }
+
+        }
+        signins();
       }
     });
+
   }
 };
 export default Login;

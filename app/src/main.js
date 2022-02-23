@@ -19,6 +19,7 @@ import Product from "./pages/product";
 import Detail_product from "./pages/detail-product";
 import Cart from "./pages/cart";
 import User from "./pages/admin/manager-user/user";
+import order from "./pages/admin/manager-order/order";
 
 
 const router = new Navigo("/", { linksSelector: "a", hash: true });
@@ -109,6 +110,9 @@ router.on({
     },
     "/admin/dashboard/user/edit/:id": ({ data }) => {
         print(Edit_category, data.id);
+    },
+    "/admin/dashboard/order": () => {
+        print(order);
     },
 
 });

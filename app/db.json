@@ -5,11 +5,17 @@
       "img": "http://res.cloudinary.com/duongquanhoa/image/upload/v1645155470/k1hdp6jbyalz5ejieif6.jpg",
       "desc": "Son môi là mỹ phẩm có chứa sắc tố, dầu, sáp, chất làm mềm da; có tác dụng tô thoa tạo màu sắc, tạo bề mặt và bảo vệ đôi môi.\n\nNhiều màu sắc và kiểu loại son môi tồn tại. Như với hầu hết nhiều loại mỹ phẩm, son môi khá phổ biến, nhưng không phải độc quyền dành cho phái nữ. Sử dụng son môi đã tồn tại từ thời Trung Cổ. Một số son môi cũng là chất dưỡng môi, để gia tăng màu sắc và độ ẩm.",
       "id": 2
+    },
+    {
+      "title": "adcscddc",
+      "img": "http://res.cloudinary.com/duongquanhoa/image/upload/v1645542166/oosbpf147bm2ccdhg8le.jpg",
+      "desc": "sdcdcscsd",
+      "id": 3
     }
   ],
   "products": [
     {
-      "title": "11",
+      "title": "Son dưỡng",
       "img": "http://res.cloudinary.com/duongquanhoa/image/upload/v1645003361/ncxldg6iiexysgzqarsv.jpg",
       "desc": "ưeweedwewefwef",
       "price": "179078",
@@ -17,7 +23,7 @@
       "id": 1
     },
     {
-      "title": "22",
+      "title": "Son môi cao cấp",
       "img": "http://res.cloudinary.com/duongquanhoa/image/upload/v1645003361/ncxldg6iiexysgzqarsv.jpg",
       "desc": "ưeweedwewefwef",
       "price": "123343",
@@ -25,7 +31,7 @@
       "id": 2
     },
     {
-      "title": "33",
+      "title": "Son lì",
       "img": "http://res.cloudinary.com/duongquanhoa/image/upload/v1645003361/ncxldg6iiexysgzqarsv.jpg",
       "desc": "ưeweedwewefwef",
       "price": "1667671",
@@ -33,7 +39,7 @@
       "id": 3
     },
     {
-      "title": "44",
+      "title": "son kem",
       "img": "http://res.cloudinary.com/duongquanhoa/image/upload/v1645003361/ncxldg6iiexysgzqarsv.jpg",
       "desc": "ưeweedwewefwef",
       "price": "13452",
@@ -41,7 +47,7 @@
       "id": 4
     },
     {
-      "title": "55",
+      "title": "son bóng",
       "img": "http://res.cloudinary.com/duongquanhoa/image/upload/v1645003386/yq3udpo6bjscuzq178f0.jpg",
       "desc": "1",
       "price": "345345",
@@ -51,11 +57,18 @@
   ],
   "users": [
     {
-      "email": "admin123@gmail.com",
-      "password": "$2a$10$iSLBLMcoGdYMJUvqebz3k.uC/Kj25Ybj87KdPT5C.GMvLAdLmcZSm",
-      "username": "admin",
+      "email": "anhbaque1@gmail.com",
+      "password": "$2a$10$.TWMdF7jBSIO91Ud1e62MuiLuxXqzCSky5WaeyhvjUDHLo/yhd3v2",
+      "username": "admin1111",
       "role": 1,
       "id": 1
+    },
+    {
+      "email": "khachhang@gmail.com",
+      "password": "$2a$10$gM9JA.GXsXRnBlkSl3mX/uFQJtplQKUeZhlKfLXawnv/p7..dca5.",
+      "username": "khachhang",
+      "role": 0,
+      "id": 2
     }
   ],
   "category": [
@@ -68,5 +81,61 @@
       "id": 2
     }
   ],
-  "orders": []
+  "orders": [
+    {
+      "email": "admin123@gmail.com",
+      "name": "admin123",
+      "address": "Quang Yen Quang Ninh",
+      "phone": "0383530895",
+      "sumToTal": 974871,
+      "sumSoluong": 7,
+      "status": "2",
+      "createdAt": "21:1:8-22-2-2022",
+      "id": 2
+    },
+    {
+      "email": "khachhang@gmail.com",
+      "name": "khachhang",
+      "address": "sdfvb",
+      "phone": "345345345",
+      "sumToTal": 123343,
+      "sumSoluong": 1,
+      "status": "2",
+      "createdAt": "21:14:40-22-2-2022",
+      "id": 3
+    },
+    {
+      "email": "khachhang@gmail.com",
+      "name": "khachhang",
+      "address": "sdfvb",
+      "phone": "2323323",
+      "sumToTal": 616715,
+      "sumSoluong": 5,
+      "status": "2",
+      "createdAt": "21:16:22-22-2-2022",
+      "id": 4
+    },
+    {
+      "email": "anhbaque1@gmail.com",
+      "name": "admin1111",
+      "address": "Quang Yen Quang Ninh",
+      "phone": "0383530895",
+      "sumToTal": 123343,
+      "sumSoluong": 1,
+      "status": "Chưa thanh toán",
+      "createdAt": "9:48:49-23-2-2022",
+      "id": 5
+    },
+    {
+      "email": "khachhang@gmail.com",
+      "name": "khachhang",
+      "address": "sdfvb",
+      "phone": "2323323",
+      "sumToTal": 740058,
+      "sumSoluong": 6,
+      "status": "2",
+      "createdAt": "9:50:3-23-2-2022",
+      "id": 6
+    }
+  ]
 }

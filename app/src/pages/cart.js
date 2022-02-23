@@ -1,6 +1,7 @@
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { add } from "../api/order";
+import { getAll } from "../api/order";
 import { reRender } from "../../utils";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
@@ -9,13 +10,16 @@ import swal from 'sweetalert';
 import { decreaseQuantity, increaseQuantity, removeItemInCart, getTotalPrice, getTotalList } from "../../utils/cart";
 
 const Cart = {
-  render() {
+  async render() {
+
     let cart = [];
     const numberFormat = new Intl.NumberFormat('vi-VN', {
       style: 'currency',
       currency: 'VND',
     });
     const { user } = JSON.parse(localStorage.getItem("user"));
+    const { data } = await getAll();
+    const dd = data.filter((orders) => orders.email === user.email);
     if (localStorage.getItem('cart')) {
       cart = JSON.parse(localStorage.getItem('cart'));
     }
@@ -128,16 +132,49 @@ const Cart = {
       </form>
     </div>
   </div>
-          </div >
-        </div >
-      </main >
+  
+</div >
+</div >
+<div class="container">
+	<h1 class="mb-8">
+    Lịch sử đặt hàng
+  </h1>
+
+	<table class="text-left w-full">
+		<thead class="bg-black flex text-white w-full">
+			<tr class="flex w-full mb-4">
+				<th class="p-4 w-1/4">Mã đơn hàng</th>
+				<th class="p-4 w-1/4">Số lượng</th>
+				<th class="p-4 w-1/4">Trạng thái</th>
+				<th class="p-4 w-1/4">Tổng tiền</th>
+				<th class="p-4 w-1/4">Thời gian</th>
+			</tr>
+		</thead>
+    <!-- Remove the nasty inline CSS fixed height on production and replace it with a CSS class — this is just for demonstration purposes! -->
+		<tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll w-full bg-white">
+			${dd.map((item) => `
+      <tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">#${item.id}</td>
+				<td class="p-4 w-1/4">${item.sumSoluong}</td>
+				<td class="p-4 w-1/4">${item.status == 1 ? "Đang giao hàng" : item.status == 2 ? "Đang vận chuyển" : item.status == 3 ? "Đang giao" : "Thành công"}</td>
+				<td class="p-4 w-1/4">${numberFormat.format(item.sumToTal)}</td>
+				<td class="p-4 w-1/4">${item.createdAt}</td>
+			</tr>
+      
+      `)}
+		</tbody>
+	</table>
+  <br>
+</div>
+</main >
+
   <footer class="footer bg-black text-white px-28">
     ${Footer.render()}
   </footer>
 `;
   },
   afterRender() {
-
+    var today = new Date();
     const { user } = JSON.parse(localStorage.getItem("user"));
     const cart = JSON.parse(localStorage.getItem('cart'));
     const formAdd = document.querySelector("#form-add-post");
@@ -160,10 +197,14 @@ const Cart = {
             name: user.username,
             address: document.querySelector("#address").value,
             phone: document.querySelector("#phone").value,
-            address: document.querySelector("#address").value,
+            sumToTal: getTotalPrice(),
+            sumSoluong: getTotalList(),
+            status: 'Chưa thanh toán',
+            createdAt: today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + '-' + today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear(),
 
           }).then(() => {
             swal("Thông báo!", "Đặt hàng thành công!", "success");
+            document.location.href = "http://localhost:3000/cart"
           });
         }
       });

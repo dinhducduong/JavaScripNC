@@ -1,6 +1,7 @@
 import { signup } from "../api/user";
 import Footer from "../components/footer";
 import Header from "../components/header";
+import $ from 'jquery';
 
 
 const Register = {
@@ -27,15 +28,15 @@ const Register = {
           <div class="rounded-md shadow-sm -space-y-px">
             <div>
               <label for="email-address" class="sr-only">User name</label>
-              <input required id="username" type="text" autocomplete="user" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="User name">
+              <input name="username" id="username" type="text" autocomplete="user" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="User name">
             </div>
             <div>
               <label for="email-address" class="sr-only">Email address</label>
-              <input required id="email" type="text" autocomplete="email" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
+              <input name="email" id="email" type="text" autocomplete="email" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
             </div>
             <div>
               <label for="password" class="sr-only">Password</label>
-              <input required id="password" type="password" autocomplete="current-password" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
+              <input name="password" id="password" type="password" autocomplete="current-password" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
             </div>
             <div>
               <label for="confrim-password" class="sr-only">confrim-password</label>
@@ -72,19 +73,47 @@ const Register = {
     `;
   },
   afterRender() {
-    const formSignup = document.querySelector('#formSignup');
-    formSignup.addEventListener('submit', function (e) {
-      e.preventDefault();
-      signup({
-        username: document.querySelector('#username').value,
-        email: document.querySelector('#email').value,
-        password: document.querySelector('#password').value,
-        role: 0,
-      }).then(() => {
-        document.location.href = "signin"
+    $("#formSignup").validate({
+      rules: {
+        "email": {
+          required: true,
+        },
+        "password": {
+          required: true,
+        },
+        "username": {
+          required: true,
+        },
 
-      });
+      },
+      messages: {
+        "password": {
+          required: "Không được để trống trường này!",
+        },
+        "email": {
+          required: "Không được để trống trường này!",
+        },
+        "username": {
+          required: "Không được để trống trường này!",
+        }
+      },
+      submitHandler: function () {
+        async function signups() {
+          signup({
+            username: document.querySelector('#username').value,
+            email: document.querySelector('#email').value,
+            password: document.querySelector('#password').value,
+            role: 0,
+          }).then(() => {
+            document.location.href = "signin"
+
+          });
+
+        }
+        signups();
+      }
     });
+
   }
 };
 export default Register;

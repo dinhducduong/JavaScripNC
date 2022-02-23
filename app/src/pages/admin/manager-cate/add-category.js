@@ -1,6 +1,8 @@
 import Header from "../components/header"
 import { add } from "../../../api/category";
 import axios from "axios";
+import $ from 'jquery';
+import validate from 'jquery-validation';
 const Add_category = {
   render() {
     return /*html*/`
@@ -20,7 +22,7 @@ ${Header.render()}
                         Tiêu đề
                       </label>
                       <div class="mt-1 flex rounded-md shadow-sm">
-                        <input required type="text" id="title" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="">
+                        <input type="text" id="title" name="title" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="">
                       </div>
                     </div>
                   </div>
@@ -55,18 +57,32 @@ ${Header.render()}
   afterRender() {
     const formAdd = document.querySelector("#form-add-post");
 
-    formAdd.addEventListener("submit", async function (e) {
-      e.preventDefault();
+    $("#form-add-post").validate({
+      rules: {
+        "title": {
+          required: true,
+          minlength: 5
+        },
+      },
+      messages: {
+        "title": {
+          required: "Không được để trống trường này!",
+          minlength: "Nhập ít nhất 5 ký tự anh ei"
+        },
+      },
+      submitHandler: function () {
+        async function addCate() {
 
-      // call api thêm bài viết
-      add({
-        title: document.querySelector("#title").value,
+          add({
+            title: document.querySelector("#title").value,
 
-      }).then(() => {
-        document.location.href = "http://localhost:3000/admin/dashboard/category"
+          }).then(() => {
+            document.location.href = "http://localhost:3000/admin/dashboard/category"
 
-      });
-
+          });
+        }
+        addCate();
+      }
     });
   },
 }
